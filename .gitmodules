@@ -1,3 +1,6 @@
 [submodule "M2TWEOP-library"]
 	path = M2TWEOP-library
 	url = https://github.com/youneuoy/M2TWEOP-library
+[submodule "M2TWEOP-luaPlugin"]
+	path = M2TWEOP-luaPlugin
+	url = https://github.com/youneuoy/M2TWEOP-luaPlugin
