@@ -1,9 +1,10 @@
 #requiments:
 #Microsoft Visual Studio 2019 in its default folder
-cd ..
+$currentLoc=(get-location).path
 Write-Host "importing visual studio module"
 &{Import-Module "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\Microsoft.VisualStudio.DevShell.dll"; Enter-VsDevShell b3468e38}| Out-Null
-cd "M2TWEOP\M2TWEOP-Generator"
+
+Set-Location -Path $currentLoc
 
 Remove-item ./logs -recurse -erroraction 'silentlycontinue' | Out-Null
 new-item ./logs -itemtype directory -erroraction 'silentlycontinue' | Out-Null
@@ -23,7 +24,8 @@ cd "documentationGenerator"
 
 
 &".\generateDocs.ps1"   -Wait -NoNewWindow | Write-Verbose
-cd ".."
+
+Set-Location -Path $currentLoc
 
 Write-Host "Copy all created files"
 
