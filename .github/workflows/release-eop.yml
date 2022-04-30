@@ -1,0 +1,26 @@
+name: Release EOP on GitHub
+
+on:
+  push:
+    branches:
+      - "test-eop-release"
+
+jobs:
+  build-eop:
+    name: Release EOP
+    runs-on: "ubuntu-latest"
+
+    steps:
+      - name: Build and compile EOP release
+        shell: pwsh
+        run: |
+        scripts/buildEOP.ps1 # Make this output to  dist/M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z
+
+      - name: Release new EOP version on GitHub
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          automatic_release_tag: "latest"
+          title: "M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z"
+          files: |
+            dist/M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z
