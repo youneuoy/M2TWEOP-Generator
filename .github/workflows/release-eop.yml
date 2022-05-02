@@ -16,11 +16,8 @@ jobs:
   prepare-environment:
     runs-on: windows-latest
     steps:
-    - name: Checkout Source
-      uses: actions/checkout@v2
-
     - name: Check Project State
-      run: ls
+      run: dir
 
     - name: Cache Chocolatey Dependencies
       uses: actions/cache@v1
