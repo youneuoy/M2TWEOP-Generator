@@ -14,35 +14,35 @@ on:
 
 jobs:
   prepare-environment:
-  runs-on: windows-latest
+    runs-on: windows-latest
     steps:
-      - name: Checkout Source
-        uses: actions/checkout@v2
+    - name: Checkout Source
+      uses: actions/checkout@v2
 
-      - name: Check Project State
-        run: ls
+    - name: Check Project State
+      run: ls
 
-      - name: Cache Chocolatey Dependencies
-        uses: actions/cache@v1
-        with:
-          path: C:\ProgramData\chocolatey\lib
-          key: choco-cache-${{ hashFiles('**/dependencies.config') }}
-          restore-keys: |
-            choco-cache-
+    - name: Cache Chocolatey Dependencies
+      uses: actions/cache@v1
+      with:
+        path: C:\ProgramData\chocolatey\lib
+        key: choco-cache-${{ hashFiles('**/dependencies.config') }}
+        restore-keys: |
+          choco-cache-
 
-      - name: Install DirectX SDK with Chocolatey
-      - uses: windows-latest
-        run: choco install directx-sdk
+    - name: Install DirectX SDK with Chocolatey
+    - uses: windows-latest
+      run: choco install directx-sdk
 
-      - name: Install Visual Studio 2019 Community with Chocolatey
-      - uses: windows-latest
-        run: choco install visualstudio2019community
-        
-      - name: Run buildEOP.ps1
-      - uses: actions/checkout@v2
-      - uses: ilammy/msvc-dev-cmd@v1
-        run: |
-          ./buildEOP.ps1
+    - name: Install Visual Studio 2019 Community with Chocolatey
+    - uses: windows-latest
+      run: choco install visualstudio2019community
+      
+    - name: Run buildEOP.ps1
+    - uses: actions/checkout@v2
+    - uses: ilammy/msvc-dev-cmd@v1
+      run: |
+        ./buildEOP.ps1
 
     # - name: Release new EOP version on GitHub
     # - uses: "marvinpinto/action-automatic-releases@latest"
