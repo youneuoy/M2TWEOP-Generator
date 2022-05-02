@@ -24,21 +24,19 @@ jobs:
     - name: Check Project State
       run: dir
 
-    - name: Cache Chocolatey Dependencies
-      id: cache-choco-packages
-      uses: actions/cache@v3
-      with:
-        path: C:\ProgramData\chocolatey\lib
-        key: choco-cache-${{ hashFiles('**/dependencies.config') }}
-        restore-keys: |
-          choco-cache-
+    # - name: Cache Chocolatey Dependencies
+    #   id: cache-choco-packages
+    #   uses: actions/cache@v3
+    #   with:
+    #     path: C:\ProgramData\chocolatey\lib
+    #     key: choco-cache-${{ hashFiles('**/dependencies.config') }}
+    #     restore-keys: |
+    #       choco-cache-
 
     - name: Install DirectX SDK with Chocolatey
-      if: steps.cache-choco-packages.outputs.cache-hit != 'true'
       run: choco install directx-sdk
 
     - name: Install Visual Studio 2019 Community with Chocolatey
-      if: steps.cache-choco-packages.outputs.cache-hit != 'true'
       run: choco install visualstudio2019community
       
     - name: Run buildEOP.ps1
