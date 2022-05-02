@@ -16,15 +16,13 @@ jobs:
   prepare-environment:
     runs-on: windows-latest
     steps:
-    - uses: actions/checkout@v2
-    - uses: ilammy/msvc-dev-cmd@v1
-
-    # 1.a
     - name: Install DirectX SDK with Chocolatey
+    - uses: windows-latest
       run: choco install directx-sdk
 
-    # 1.b
     - name: Run buildEOP.ps1
+    - uses: actions/checkout@v2
+    - uses: ilammy/msvc-dev-cmd@v1
       run: |
         ./buildEOP.ps1
 
