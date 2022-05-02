@@ -14,5 +14,4 @@ Remove-item EOPDocs/build/* -recurse
 #copy created scripting docs to main docs source folder
 Copy-Item -Path "generatedLuaDocs/*" -Destination "EOPDocs/source/_static/LuaLib" -recurse
 
-
-Start-Process -FilePath ".\EOPDocs\WPy32-3890\scripts\cmdEOPDOCS.bat" -Wait -NoNewWindow | Out-Null
+Start-Process -FilePath ".\EOPDocs\WPy32-3890\scripts\cmdEOPDOCS.bat" -Wait -NoNewWindow

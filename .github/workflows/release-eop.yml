@@ -1,3 +1,10 @@
+# Steps
+# 1. Prepare environment
+#   a. Install DirectXSDK(June 2010)
+#   b. Install Visual Studio 2019 Environment
+# 2. Issue Release on GitHub using generated ZIP
+# 3. Build and Compile docs and place in /docs folder
+
 name: Release EOP on GitHub
 
 on:
@@ -6,21 +13,23 @@ on:
       - "test-eop-release"
 
 jobs:
-  build-eop:
-    name: Release EOP
-    runs-on: "ubuntu-latest"
-
+  prepare-environment:
+    runs-on: windows-latest
     steps:
-      - name: Build and compile EOP release
-        shell: pwsh
-        run: |
-        scripts/buildEOP.ps1 # Make this output to  dist/M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z
+    - name: Install DirectX SDK with Chocolatey
+      run: choco install directx-sdk
 
-      - name: Release new EOP version on GitHub
-      - uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          title: "M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z"
-          files: |
-            dist/M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z
+    - name: Run buildEOP.ps1
+    - uses: actions/checkout@v2
+    - uses: ilammy/msvc-dev-cmd@v1
+      run: |
+        ./buildEOP.ps1
+
+    # - name: Release new EOP version on GitHub
+    # - uses: "marvinpinto/action-automatic-releases@latest"
+    #   with:
+    #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+    #     automatic_release_tag: "latest"
+    #     title: "M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z"
+    #     files: |
+    #       dist/M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z
