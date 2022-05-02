@@ -22,13 +22,13 @@ jobs:
     # - name: Check Project State
     #   run: dir
 
-    - name: Cache Chocolatey Dependencies
-      uses: actions/cache@v1
-      with:
-        path: C:\ProgramData\chocolatey\lib
-        key: choco-cache-${{ hashFiles('**/dependencies.config') }}
-        restore-keys: |
-          choco-cache-
+    # - name: Cache Chocolatey Dependencies
+    #   uses: actions/cache@v1
+    #   with:
+    #     path: C:\ProgramData\chocolatey\lib
+    #     key: choco-cache-${{ hashFiles('**/dependencies.config') }}
+    #     restore-keys: |
+    #       choco-cache-
 
     - name: Install DirectX SDK with Chocolatey
     - uses: windows-latest
