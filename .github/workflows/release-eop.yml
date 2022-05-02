@@ -31,7 +31,7 @@ jobs:
           choco-cache-
 
     - name: Install DirectX SDK with Chocolatey
-    - uses: windows-latest
+      uses: windows-latest
       run: choco install directx-sdk
 
     - name: Install Visual Studio 2019 Community with Chocolatey
