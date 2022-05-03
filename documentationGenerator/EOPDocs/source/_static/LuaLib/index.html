@@ -269,12 +269,8 @@ M2TWEOP structures and functions.</p>
 	<td class="summary">Create army for character.</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#game.createUnitN">game.createUnitN (type, facNum, exp, armor, weapon)</a></td>
-	<td class="summary">create unit by name.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#game.createUnitIdx">game.createUnitIdx (type, facNum, exp, armor, weapon)</a></td>
-	<td class="summary">create unit by index in EDU.</td>
+	<td class="name" nowrap><a href="#game.createArmyInSettlement">game.createArmyInSettlement (settlement)</a></td>
+	<td class="summary">Create army in settlement(not need character).</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#game.getScriptCounter">game.getScriptCounter (counterName)</a></td>
@@ -516,8 +512,16 @@ M2TWEOP structures and functions.</p>
 	<td class="summary">Find the fort in which the army is located</td>
 	</tr>
 	<tr>
-	<td class="name" nowrap><a href="#stackStruct:addUnit">stackStruct:addUnit (unit)</a></td>
-	<td class="summary">Add unit to this army.</td>
+	<td class="name" nowrap><a href="#stackStruct:createUnit">stackStruct:createUnit (index, exp, armor, weapon)</a></td>
+	<td class="summary">Create unit in army by type from M2TWEOP units DB(M2TWEOPDU, no have 500 types limit).</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#stackStruct:createUnit">stackStruct:createUnit (type, exp, armor, weapon)</a></td>
+	<td class="summary">Create unit in army by type from EDB.</td>
+	</tr>
+	<tr>
+	<td class="name" nowrap><a href="#stackStruct:createUnitByIDX">stackStruct:createUnitByIDX (index, exp, armor, weapon)</a></td>
+	<td class="summary">Create unit in army by index from EDB.</td>
 	</tr>
 	<tr>
 	<td class="name" nowrap><a href="#stackStruct:siegeSettlement">stackStruct:siegeSettlement (settlement)</a></td>
@@ -591,10 +595,6 @@ M2TWEOP structures and functions.</p>
 	<tr>
 	<td class="name" nowrap><a href="#M2TWEOPDU.setEntryLocalizedShortDescr">M2TWEOPDU.setEntryLocalizedShortDescr (eopEnryIndex, newLocalizedShortDescr)</a></td>
 	<td class="summary">Set localized short description for M2TWEOPDU entry.</td>
-	</tr>
-	<tr>
-	<td class="name" nowrap><a href="#M2TWEOPDU.createUnitByIndex">M2TWEOPDU.createUnitByIndex (eopEnryIndex, facNum, exp, armor, weapon)</a></td>
-	<td class="summary">Create new unit from DU entry.</td>
 	</tr>
 </table>
 <h2><a href="#campaign_enums_section">campaign enums section </a></h2>
@@ -2394,14 +2394,8 @@ stratmap.objects.setModel(<span class="number">288</span>,<span class="number">2
 
 
         </li>
-        <li><span class="parameter">createUnitN</span>
-            <span class="types"><a class="type" href="index.html#game.createUnitN">createUnitN</a></span>
-
-
-
-        </li>
-        <li><span class="parameter">createUnitIdx</span>
-            <span class="types"><a class="type" href="index.html#game.createUnitIdx">createUnitIdx</a></span>
+        <li><span class="parameter">createArmyInSettlement</span>
+            <span class="types"><a class="type" href="index.html#game.createArmyInSettlement">createArmyInSettlement</a></span>
 
 
 
@@ -2661,41 +2655,17 @@ stratmap.objects.setModel(<span class="number">288</span>,<span class="number">2
 
 </dd>
     <dt>
-    <a name = "game.createUnitN"></a>
-    <strong>game.createUnitN (type, facNum, exp, armor, weapon)</strong>
+    <a name = "game.createArmyInSettlement"></a>
+    <strong>game.createArmyInSettlement (settlement)</strong>
     </dt>
     <dd>
-    create unit by name.
+    Create army in settlement(not need character).
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">type</span>
-            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
-
-
-
-        </li>
-        <li><span class="parameter">facNum</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">exp</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">armor</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">weapon</span>
-            <span class="types"><span class="type">int</span></span>
+        <li><span class="parameter">settlement</span>
+            <span class="types"><a class="type" href="index.html#settlementStruct">settlementStruct</a></span>
 
 
 
@@ -2705,72 +2675,15 @@ stratmap.objects.setModel(<span class="number">288</span>,<span class="number">2
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><a class="type" href="index.html#unit">unit</a></span>
-        newUnit
+           <span class="types"><a class="type" href="index.html#stackStruct">stackStruct</a></span>
+        army
     </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">newUnit=stratmap.game.createUnitN(<span class="string">"Axemen of Lossarnach"</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "game.createUnitIdx"></a>
-    <strong>game.createUnitIdx (type, facNum, exp, armor, weapon)</strong>
-    </dt>
-    <dd>
-    create unit by index in EDU.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">type</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">facNum</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">exp</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">armor</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">weapon</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="index.html#unit">unit</a></span>
-        newUnit
-    </ol>
-
-
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre class="example">newUnit=stratmap.game.createUnitIdx(<span class="number">52</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</pre>
+        <pre class="example">army=stratmap.game.createArmyInSettlement(sett);</pre>
     </ul>
 
 </dd>
@@ -2930,7 +2843,7 @@ stratmap.objects.setModel(<span class="number">288</span>,<span class="number">2
 
         </li>
         <li><span class="parameter">kill</span>
-            <span class="types"><a class="type" href="index.html#character:kill">kill</a></span>
+            <span class="types"><a class="type" href="index.html#unit:kill">kill</a></span>
 
 
 
@@ -2968,8 +2881,7 @@ stratmap.objects.setModel(<span class="number">288</span>,<span class="number">2
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">newUnit=stratmap.game.createUnitN(<span class="string">"Axemen of Lossarnach"</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);
-newUnit:kill();</pre>
+        <pre class="example">unit:kill();</pre>
     </ul>
 
 </dd>
@@ -3008,8 +2920,7 @@ newUnit:kill();</pre>
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">newUnit=stratmap.game.createUnitN(<span class="string">"Axemen of Lossarnach"</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);
-newUnit:setParams(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</pre>
+        <pre class="example">unit:setParams(<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>);</pre>
     </ul>
 
 </dd>
@@ -3118,7 +3029,7 @@ newUnit:setParams(<span class="number">0</span>,<span class="number">0</span>,<s
 
         </li>
         <li><span class="parameter">kill</span>
-            <span class="types"><a class="type" href="index.html#character:kill">kill</a></span>
+            <span class="types"><a class="type" href="index.html#unit:kill">kill</a></span>
 
 
 
@@ -3326,8 +3237,7 @@ newUnit:setParams(<span class="number">0</span>,<span class="number">0</span>,<s
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">newUnit=stratmap.game.createUnitN(<span class="string">"Axemen of Lossarnach"</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);
-ourCharacter:setBodyguardUnit(newUnit);</pre>
+        <pre class="example">ourCharacter:setBodyguardUnit(unit);</pre>
     </ul>
 
 </dd>
@@ -4919,8 +4829,20 @@ ourSett = ourFac:getSettlement(<span class="number">0</span>);
             <span class="types"><span class="type">float</span></span>
          reform point y coordinate in battle
         </li>
-        <li><span class="parameter">addUnit</span>
-            <span class="types"><a class="type" href="index.html#stackStruct:addUnit">addUnit</a></span>
+        <li><span class="parameter">createEOPUnit</span>
+            <span class="types"><span class="type">createEOPUnit</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">createUnit</span>
+            <span class="types"><a class="type" href="index.html#stackStruct:createUnit">createUnit</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">createUnitByIDX</span>
+            <span class="types"><a class="type" href="index.html#stackStruct:createUnitByIDX">createUnitByIDX</a></span>
 
 
 
@@ -5071,17 +4993,35 @@ ourChar:kill();</pre>
 
 </dd>
     <dt>
-    <a name = "stackStruct:addUnit"></a>
-    <strong>stackStruct:addUnit (unit)</strong>
+    <a name = "stackStruct:createUnit"></a>
+    <strong>stackStruct:createUnit (index, exp, armor, weapon)</strong>
     </dt>
     <dd>
-    Add unit to this army.
+    Create unit in army by type from M2TWEOP units DB(M2TWEOPDU, no have 500 types limit).
 
 
     <h3>Parameters:</h3>
     <ul>
-        <li><span class="parameter">unit</span>
-            <span class="types"><a class="type" href="index.html#unit">unit</a></span>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">exp</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">armor</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">weapon</span>
+            <span class="types"><span class="type">int</span></span>
 
 
 
@@ -5091,20 +5031,117 @@ ourChar:kill();</pre>
     <h3>Returns:</h3>
     <ol>
 
-           <span class="types"><span class="type">int</span></span>
-        ifSucess
+           <span class="types"><a class="type" href="index.html#unit">unit</a></span>
+        newUnit
     </ol>
 
 
 
     <h3>Usage:</h3>
     <ul>
-        <pre class="example">newUnit=stratmap.game.createUnitN(<span class="string">"Axemen of Lossarnach"</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);
-sucess=stackStruct:addUnit(newUnit);
-<span class="keyword">if</span>(sucess~=<span class="number">0</span>)
-<span class="keyword">then</span>
-	<span class="comment">--something
-</span><span class="keyword">end</span></pre>
+        <pre class="example"><span class="keyword">local</span> newUnit=stackStruct:createEOPUnit(<span class="number">1000</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "stackStruct:createUnit"></a>
+    <strong>stackStruct:createUnit (type, exp, armor, weapon)</strong>
+    </dt>
+    <dd>
+    Create unit in army by type from EDB.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">type</span>
+            <span class="types"><a class="type" href="https://www.lua.org/manual/5.1/manual.html#5.4">string</a></span>
+
+
+
+        </li>
+        <li><span class="parameter">exp</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">armor</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">weapon</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="index.html#unit">unit</a></span>
+        newUnit
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> newUnit=stackStruct:createUnit(<span class="string">"Axemen of Lossarnach"</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</pre>
+    </ul>
+
+</dd>
+    <dt>
+    <a name = "stackStruct:createUnitByIDX"></a>
+    <strong>stackStruct:createUnitByIDX (index, exp, armor, weapon)</strong>
+    </dt>
+    <dd>
+    Create unit in army by index from EDB.
+
+
+    <h3>Parameters:</h3>
+    <ul>
+        <li><span class="parameter">index</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">exp</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">armor</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+        <li><span class="parameter">weapon</span>
+            <span class="types"><span class="type">int</span></span>
+
+
+
+        </li>
+    </ul>
+
+    <h3>Returns:</h3>
+    <ol>
+
+           <span class="types"><a class="type" href="index.html#unit">unit</a></span>
+        newUnit
+    </ol>
+
+
+
+    <h3>Usage:</h3>
+    <ul>
+        <pre class="example"><span class="keyword">local</span> newUnit=stackStruct:createUnitByIDX(<span class="number">255</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</pre>
     </ul>
 
 </dd>
@@ -5382,12 +5419,6 @@ sucess=stackStruct:addUnit(newUnit);
         </li>
         <li><span class="parameter">setEntryLocalizedShortDescr</span>
             <span class="types"><a class="type" href="index.html#M2TWEOPDU.setEntryLocalizedShortDescr">setEntryLocalizedShortDescr</a></span>
-
-
-
-        </li>
-        <li><span class="parameter">createUnitByIndex</span>
-            <span class="types"><a class="type" href="index.html#M2TWEOPDU.createUnitByIndex">createUnitByIndex</a></span>
 
 
 
@@ -5679,67 +5710,6 @@ sucess=stackStruct:addUnit(newUnit);
     <h3>Usage:</h3>
     <ul>
         <pre class="example">M2TWEOPDU.setEntryLocalizedShortDescr(<span class="number">1000</span>,<span class="string">"This is test unit short description\n123321\nCreated with m2tweop"</span>);</pre>
-    </ul>
-
-</dd>
-    <dt>
-    <a name = "M2TWEOPDU.createUnitByIndex"></a>
-    <strong>M2TWEOPDU.createUnitByIndex (eopEnryIndex, facNum, exp, armor, weapon)</strong>
-    </dt>
-    <dd>
-    Create new unit from DU entry.
-
-
-    <h3>Parameters:</h3>
-    <ul>
-        <li><span class="parameter">eopEnryIndex</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">facNum</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">exp</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">armor</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-        <li><span class="parameter">weapon</span>
-            <span class="types"><span class="type">int</span></span>
-
-
-
-        </li>
-    </ul>
-
-    <h3>Returns:</h3>
-    <ol>
-
-           <span class="types"><a class="type" href="index.html#unit">unit</a></span>
-        newUnit
-    </ol>
-
-
-    <h3>See also:</h3>
-    <ul>
-         <a href="index.html#stackStruct:addUnit">stackStruct:addUnit</a>
-    </ul>
-
-    <h3>Usage:</h3>
-    <ul>
-        <pre class="example"><span class="keyword">local</span> ourUnit=M2TWEOPDU.createUnitByIndex(<span class="number">1000</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>);</pre>
     </ul>
 
 </dd>
@@ -11200,7 +11170,7 @@ M2TWEOPSounds.stopEOPSound(ourNewSound);</pre>
 </div> <!-- id="main" -->
 <div id="about">
 <i>generated by <a href="http://github.com/stevedonovan/LDoc">LDoc 1.4.6</a></i>
-<i style="float:right;">Last updated 2022-04-29 19:15:04 </i>
+<i style="float:right;">Last updated 2022-05-03 03:43:03 </i>
 </div> <!-- id="about" -->
 </div> <!-- id="container" -->
 </body>
