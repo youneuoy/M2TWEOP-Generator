@@ -1,34 +1,24 @@
 #requiments:
 #Microsoft Visual Studio 2019 in its default folder
-$currentLoc=(get-location).path
 
-$text = 'EOP';
-Write-Output "`e[4m$text";
-
-Write-Output "`e[3S$text`e[3S"
-
-$fgColors = '30','31','32','33','34','35','36','37'
-$bgColors = '40','41','42','43','44','45','46','47'
-
-foreach ($fgColor in $fgColors)
-{
-    $bgColor = $bgColors | Get-Random
-    Write-Output "`e[$($fgColor)m#PS7`e[0m`e[30;$($bgColor)m Now `e[0m`e[7;$($fgColor);$($bgColor)m >_ `e[0m"
-}
-
-
-Write-Host "======== 0) Pre Cleanup ========\n" -ForegroundColor Yellow
 # &{Import-Module "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";}
 # $vsPath = &(Join-Path ${env:ProgramFiles(x86)} "\Microsoft Visual Studio\Installer\vswhere.exe") -property installationpath
 # Import-Module (Join-Path $vsPath "Common7\Tools\Microsoft.VisualStudio.DevShell.dll")
 # Enter-VsDevShell -VsInstallPath $vsPath -SkipAutomaticLocation
+
+$currentLoc=(get-location).path
+$color = "`e[$(35)m"
+$endColor = "`e[0m`e[30;"
+
+Write-Output "$color ======== 0) Pre Cleanup ======== $endColor"
+
 
 Set-Location -Path $currentLoc
 Remove-item ./logs -recurse -erroraction 'silentlycontinue'
 new-item ./logs -itemtype directory -erroraction 'silentlycontinue'
 
 # 1) Build M2TWEOP-library
-Write-Host "======== 1) Build M2TWEOP-library ========\n" -ForegroundColor Yellow
+Write-Output "$color ======== 1) Build M2TWEOP-library ======== $endColor"
 
 devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP library" /out "logs\library.log"
 devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP GUI" /out "logs\GUI.log"
@@ -36,18 +26,18 @@ devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2T
 devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "d3d9"  /out "logs\d3d9.log"
 
 # 2) Build M2TWEOP-LuaPlugin
-Write-Host "======== 2) Build M2TWEOP-LuaPlugin ========\n" -ForegroundColor Yellow
+Write-Output "$color ======== 2) Build M2TWEOP-LuaPlugin ======== $endColor"
 
 devenv  "M2TWEOP-luaPlugin\luaPlugin.sln" /build "Release|x86" /project "luaPlugin"  /out "logs\luaPlugin.log"
 
 # 3) Build Documentation
-Write-Host "======== 3) Build M2TWEOP-Documentation ========\n" -ForegroundColor Yellow
+Write-Output "$color ========= 3) Build M2TWEOP-Documentation ======== $endColor"
 
 cd "documentationGenerator"
 &".\generateDocs.ps1"   -Wait -NoNewWindow | Write-Verbose
 
 # 4) Copy built files
-Write-Host "======== 4) Copy all created files ========\n" -ForegroundColor Yellow
+Write-Output "$color ======== 4) Copy all created files ======== $endColor"
 
 Set-Location -Path $currentLoc
 Remove-item ./M2TWEOPGenerated -recurse -erroraction 'silentlycontinue'
@@ -63,11 +53,11 @@ Copy-Item -Path  "M2TWEOP-library\Release\M2TWEOP tools.exe" -Destination "./M2T
 Copy-Item -Path  "M2TWEOP-library\Release\M2TWEOPLibrary.dll" -Destination "./M2TWEOPGenerated"
 
 # 5) Generate Release ZIP
-Write-Host "======== 5) Generate Release ZIP ========\n" -ForegroundColor Yellow
+Write-Output "$color======== 5) Generate Release ZIP ======== $endColor"
 Remove-item M2TWEOP.zip -erroraction 'silentlycontinue'
 Compress-Archive -Path "./M2TWEOPGenerated/*"  -DestinationPath "M2TWEOP.zip"
 Remove-item ./M2TWEOPGenerated -recurse -erroraction 'silentlycontinue'
 
 # 6) Done
-Write-Host "======== 6) Success! EOP Built Successfully! ========\n" -ForegroundColor Yellow
+Write-Output "$color======== 6) Success! EOP Built Successfully! ======== $endColor"
 pause
