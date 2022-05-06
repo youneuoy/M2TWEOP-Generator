@@ -60,13 +60,8 @@ jobs:
       run: ls -l
       shell: bash
 
-  # If the latest commit message starts with 'Release', issue a release on GitHub
-  release-eop:
-    needs: build-eop
-    runs-on: windows-latest
-
-    if: "startsWith(github.event.head_commit.message, 'Release')"
-    steps:
+      # If the latest commit message starts with 'Release', issue a release on GitHub
+      if: "startsWith(github.event.head_commit.message, 'Release')"
     - name: Release new EOP version on GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
