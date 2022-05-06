@@ -37,9 +37,8 @@ Set-Location -Path $currentLoc
 Remove-item ./M2TWEOPGenerated -recurse -erroraction 'silentlycontinue'
 new-item ./M2TWEOPGenerated  -itemtype directory -erroraction 'silentlycontinue'
 
-
 Copy-Item -Path  "M2TWEOP-DataFiles\*" -Destination "./M2TWEOPGenerated" -recurse
-Copy-Item -Path  "documentationGenerator\EOPDocs\build\html\*" -Destination "./M2TWEOPGenerated/eopData/helpPages" -recurse
+Copy-Item -Path  "documentationGenerator\EOPDocs\build\html\*" -Destination "./M2TWEOPGenerated/eopData/helpPages" -recurse -erroraction 'silentlycontinue'
 
 Copy-Item -Path  "M2TWEOP-luaPlugin\Release\luaPlugin.dll" -Destination "./M2TWEOPGenerated/youneuoy_Data/plugins"
 Copy-Item -Path  "M2TWEOP-library\Release\d3d9.dll" -Destination "./M2TWEOPGenerated"
@@ -52,7 +51,6 @@ Write-Host "======== 5) Generate Release ZIP ========\n" -ForegroundColor Yellow
 Remove-item M2TWEOP.zip -erroraction 'silentlycontinue'
 Compress-Archive -Path "./M2TWEOPGenerated/*"  -DestinationPath "M2TWEOP.zip"
 Remove-item ./M2TWEOPGenerated -recurse -erroraction 'silentlycontinue'
-
 
 # 6) Done
 Write-Host "======== 6) Success! EOP Built Successfully! ========\n" -ForegroundColor Yellow

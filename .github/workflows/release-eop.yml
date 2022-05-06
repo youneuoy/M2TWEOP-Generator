@@ -23,10 +23,9 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Check Project State
+    - name: Show checked out files
       run: dir
 
-    # Activate cache
     - name: Start DXSDK Cache
       id:   dxcache
       uses: actions/cache@v1
@@ -41,8 +40,6 @@ jobs:
             7z -y x _DX2010_.exe DXSDK
             rm -fR _DX*_ _DX*_.exe
       shell: bash
-    # - name: Install DirectX SDK with Chocolatey
-    #   run: choco install directx-sdk
 
     - name: Install Visual Studio 2019 Community with Chocolatey
       run: choco install visualstudio2019community
@@ -53,11 +50,13 @@ jobs:
       env:
         DXSDK_DIR: ${{ github.workspace }}\DXSDK\
 
-    # - name: Release new EOP version on GitHub
-    # - uses: "marvinpinto/action-automatic-releases@latest"
-    #   with:
-    #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-    #     automatic_release_tag: "latest"
-    #     title: "M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z"
-    #     files: |
-    #       dist/M2TWEOP-2.1.beta.${{ secrets.BETA_VERSION}}.7z
+    - name: Check Project State after completion
+      run: dir
+
+    - name: Release new EOP version on GitHub
+    - uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        title: "M2TWEOP-Github-generated.zip"
+        files: M2TWEOP.zip
