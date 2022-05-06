@@ -10,7 +10,7 @@ name: Release EOP on GitHub
 on: [push, pull_request]
 
 jobs:
-  prepare-environment:
+  build-eop:
     runs-on: windows-latest
     steps:
     - uses: ilammy/msvc-dev-cmd@v1
@@ -54,6 +54,7 @@ jobs:
 
   # If the latest commit message starts with 'Release', issue a release on GitHub
   release-eop:
+    runs-on: windows-latest
     steps:
       if: "startsWith(github.event.head_commit.message, 'Release')"
       - name: Release new EOP version on GitHub
