@@ -17,10 +17,10 @@ jobs:
     runs-on: windows-latest
     steps:
 
-    # if: startsWith(${{ github.event.head_commit.message }}, 'Release')
-    # - name: This is a release
-    # run: echo 'This is a release'
-    # shell: bash
+    - name: This is a release
+    if: "!startsWith(github.event.head_commit.message, 'SKIP SCRIPTS')"
+    run: echo 'This is a release'
+    shell: bash
 
     - uses: ilammy/msvc-dev-cmd@v1
 
@@ -66,6 +66,7 @@ jobs:
     needs: build-eop
     runs-on: windows-latest
     if: startsWith(${{ github.event.head_commit.message }}, 'Release')
+
     steps:
     - name: Release new EOP version on GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
