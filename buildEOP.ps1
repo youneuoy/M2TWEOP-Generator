@@ -56,4 +56,3 @@ Remove-item ./M2TWEOPGenerated -recurse -erroraction 'silentlycontinue'
 
 # 6) Done
 Write-Output "$color======== 6) Success! EOP Built Successfully! ======== $endColor"
-pause

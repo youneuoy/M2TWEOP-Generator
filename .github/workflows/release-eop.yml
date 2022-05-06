@@ -16,15 +16,9 @@ jobs:
   build-eop:
     runs-on: windows-latest
     steps:
-
-    - name: This is a release
-      if: "!startsWith(github.event.head_commit.message, 'SKIP SCRIPTS')"
-      run: echo 'This is a release'
-      shell: bash
-
     - uses: ilammy/msvc-dev-cmd@v1
 
-    - name: "Checkout from latest commit: ${{ github.event.head_commit.message }}"
+    - name: "Checkout from latest commit: '${{ github.event.head_commit.message }}'"
       uses: actions/checkout@v3
       with:
         submodules: recursive
@@ -33,7 +27,7 @@ jobs:
       run: ls -l
       shell: bash
 
-    - name: Setup DirectX Cache
+    - name: Verify DirectX Cache
       id:   dxcache
       uses: actions/cache@v1
       with:
@@ -57,7 +51,7 @@ jobs:
       env:
         DXSDK_DIR: ${{ github.workspace }}\DXSDK\
 
-    - name: Check Project State after completion
+    - name: Show generated files
       run: ls -l
       shell: bash
 
@@ -65,9 +59,9 @@ jobs:
   release-eop:
     needs: build-eop
     runs-on: windows-latest
-    if: startsWith(${{ github.event.head_commit.message }}, 'Release')
-
     steps:
+
+    if: "startsWith(github.event.head_commit.message, 'Release')"
     - name: Release new EOP version on GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
