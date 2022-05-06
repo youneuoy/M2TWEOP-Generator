@@ -7,10 +7,7 @@
 
 name: Release EOP on GitHub
 
-on:
-  push:
-    branches:
-      - "test-eop-release"
+on: [push, pull_request]
 
 jobs:
   prepare-environment:
@@ -18,13 +15,14 @@ jobs:
     steps:
     - uses: ilammy/msvc-dev-cmd@v1
 
-    - name: Checkout Source
+    - name: "Checkout from latest commit: ${{github.event.head_commit.message}}"
       uses: actions/checkout@v3
       with:
         submodules: recursive
 
     - name: Show checked out files
-      run: dir
+      run: ls -l
+      shell: bash
 
     - name: Setup DirectX Cache
       id:   dxcache
@@ -33,7 +31,7 @@ jobs:
        path: DXSDK
        key:  dxsdk-cache
 
-    - name:  Download DirectX SDK
+    - name:  Download DirectX SDK if not cached
       if:    steps.dxsdk-cache.outputs.cache-hit != 'true'
       run:   |
             curl -L https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -o _DX2010_.exe
@@ -51,12 +49,15 @@ jobs:
         DXSDK_DIR: ${{ github.workspace }}\DXSDK\
 
     - name: Check Project State after completion
-      run: dir
+      run: ls -l
+      shell: bash
 
-    # - name: Release new EOP version on GitHub
-    # - uses: "marvinpinto/action-automatic-releases@latest"
-    #   with:
-    #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
-    #     automatic_release_tag: "latest"
-    #     title: "M2TWEOP-Github-generated.zip"
-    #     files: M2TWEOP.zip
+    # If the latest commit message starts with 'Release', issue a release
+    if: "startsWith(github.event.head_commit.message, 'Release')"
+    - name: Release new EOP version on GitHub
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        title: "M2TWEOP-Github-generated.zip"
+        files: M2TWEOP.zip

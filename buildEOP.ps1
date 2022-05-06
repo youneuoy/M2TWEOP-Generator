@@ -1,16 +1,9 @@
-#requiments:
-#Microsoft Visual Studio 2019 in its default folder
-
-# &{Import-Module "C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\Tools\Microsoft.VisualStudio.DevShell.dll";}
-# $vsPath = &(Join-Path ${env:ProgramFiles(x86)} "\Microsoft Visual Studio\Installer\vswhere.exe") -property installationpath
-# Import-Module (Join-Path $vsPath "Common7\Tools\Microsoft.VisualStudio.DevShell.dll")
-# Enter-VsDevShell -VsInstallPath $vsPath -SkipAutomaticLocation
-
+# BUILD EOP Script
 $currentLoc=(get-location).path
 $color = "`e[$(35)m"
 $endColor = "`e[0m`e[30;"
 
-Write-Output "$color ======== 0) Pre Cleanup ======== $endColor"
+Write-Output "$color======== 0) Pre Cleanup ======== $endColor"
 
 
 Set-Location -Path $currentLoc
@@ -18,7 +11,7 @@ Remove-item ./logs -recurse -erroraction 'silentlycontinue'
 new-item ./logs -itemtype directory -erroraction 'silentlycontinue'
 
 # 1) Build M2TWEOP-library
-Write-Output "$color ======== 1) Build M2TWEOP-library ======== $endColor"
+Write-Output "$color======== 1) Build M2TWEOP-library ======== $endColor"
 
 devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP library" /out "logs\library.log"
 devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP GUI" /out "logs\GUI.log"
@@ -26,18 +19,18 @@ devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2T
 devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "d3d9"  /out "logs\d3d9.log"
 
 # 2) Build M2TWEOP-LuaPlugin
-Write-Output "$color ======== 2) Build M2TWEOP-LuaPlugin ======== $endColor"
+Write-Output "$color======== 2) Build M2TWEOP-LuaPlugin ======== $endColor"
 
 devenv  "M2TWEOP-luaPlugin\luaPlugin.sln" /build "Release|x86" /project "luaPlugin"  /out "logs\luaPlugin.log"
 
 # 3) Build Documentation
-Write-Output "$color ========= 3) Build M2TWEOP-Documentation ======== $endColor"
+Write-Output "$color======== 3) Build M2TWEOP-Documentation ======== $endColor"
 
 cd "documentationGenerator"
 &".\generateDocs.ps1"   -Wait -NoNewWindow | Write-Verbose
 
 # 4) Copy built files
-Write-Output "$color ======== 4) Copy all created files ======== $endColor"
+Write-Output "$color======== 4) Copy all created files ======== $endColor"
 
 Set-Location -Path $currentLoc
 Remove-item ./M2TWEOPGenerated -recurse -erroraction 'silentlycontinue'
