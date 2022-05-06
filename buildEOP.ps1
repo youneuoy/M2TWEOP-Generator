@@ -1,5 +1,8 @@
 # BUILD EOP Script
 $currentLoc=(get-location).path
+
+# Colors
+# https://duffney.io/usingansiescapesequencespowershell/
 $color = "`e[$(35)m"
 $endColor = "`e[0m`e[30;"
 

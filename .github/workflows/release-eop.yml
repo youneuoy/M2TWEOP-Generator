@@ -56,15 +56,14 @@ jobs:
       shell: bash
 
   # If the latest commit message starts with 'Release', issue a release on GitHub
+  if: startsWith(${{ github.event.head_commit.message }}, 'Release')
   release-eop:
     needs: build-eop
-    if: startsWith(${{ github.event.head_commit.message }}, 'Release')
     runs-on: windows-latest
     steps:
     - name: Release new EOP version on GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
         title: "M2TWEOP-Github-generated.zip"
         files: M2TWEOP.zip
