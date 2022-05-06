@@ -7,9 +7,6 @@
 
 name: Release EOP on GitHub
 
-env:
-  DXSDK_DIR: $HOME/cache/
-
 on:
   push:
     branches:
@@ -29,20 +26,19 @@ jobs:
     - name: Check Project State
       run: dir
 
-    - name: Setup cache
-      id:   cache
+    # Activate cache
+    - name: Start DXSDK Cache
+      id:   dxcache
       uses: actions/cache@v1
       with:
-        path: ~/cache
-        key:  cache
+       path: DXSDK
+       key:  dxsdk-includes
 
     - name:  Download and cache DirectX SDK
-      if:    steps.cache.outputs.cache-hit != 'true'
+      if:    steps.dxcache.outputs.cache-hit != 'true'
       run:   |
             curl -L https://download.microsoft.com/download/a/e/7/ae743f1f-632b-4809-87a9-aa1bb3458e31/DXSDK_Jun10.exe -o _DX2010_.exe
-            7z x _DX2010_.exe DXSDK/Include -o_DX2010_
-            7z x _DX2010_.exe DXSDK/Lib/x86 -o_DX2010_
-            mv _DX2010_/DXSDK $HOME/cache
+            7z x _DX2010_.exe DXSDK
             rm -fR _DX*_ _DX*_.exe
       shell: bash
     # - name: Install DirectX SDK with Chocolatey
@@ -54,6 +50,8 @@ jobs:
     - name: Run buildEOP.ps1
       run: |
         ./buildEOP.ps1
+      env:
+        DXSDK_DIR: ${{ github.workspace }}\DXSDK\
 
     # - name: Release new EOP version on GitHub
     # - uses: "marvinpinto/action-automatic-releases@latest"
