@@ -53,10 +53,10 @@ jobs:
     - name: Check Project State after completion
       run: dir
 
-    - name: Release new EOP version on GitHub
-    - uses: "marvinpinto/action-automatic-releases@latest"
-      with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        automatic_release_tag: "latest"
-        title: "M2TWEOP-Github-generated.zip"
-        files: M2TWEOP.zip
+    # - name: Release new EOP version on GitHub
+    # - uses: "marvinpinto/action-automatic-releases@latest"
+    #   with:
+    #     repo_token: "${{ secrets.GITHUB_TOKEN }}"
+    #     automatic_release_tag: "latest"
+    #     title: "M2TWEOP-Github-generated.zip"
+    #     files: M2TWEOP.zip
