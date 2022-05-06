@@ -20,6 +20,8 @@ jobs:
 
     - name: Checkout Source
       uses: actions/checkout@v3
+      with:
+        submodules: recursive
 
     - name: Check Project State
       run: dir
@@ -38,7 +40,7 @@ jobs:
 
     - name: Install Visual Studio 2019 Community with Chocolatey
       run: choco install visualstudio2019community
-      
+
     - name: Run buildEOP.ps1
       run: |
         ./buildEOP.ps1
