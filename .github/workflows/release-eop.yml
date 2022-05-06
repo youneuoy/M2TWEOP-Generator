@@ -17,8 +17,8 @@ jobs:
     runs-on: windows-latest
     steps:
 
-    - name: This is a release
     if: startsWith(${{ github.event.head_commit.message }}, 'Release')
+    - name: This is a release
     run: echo 'This is a release'
     shell: bash
 
