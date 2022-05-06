@@ -16,6 +16,12 @@ jobs:
   build-eop:
     runs-on: windows-latest
     steps:
+
+    - name: This is a release
+    if: startsWith(${{ github.event.head_commit.message }}, 'Release')
+    run: echo 'This is a release'
+    shell: bash
+
     - uses: ilammy/msvc-dev-cmd@v1
 
     - name: "Checkout from latest commit: ${{ github.event.head_commit.message }}"
@@ -56,10 +62,10 @@ jobs:
       shell: bash
 
   # If the latest commit message starts with 'Release', issue a release on GitHub
-  if: startsWith(${{ github.event.head_commit.message }}, 'Release')
   release-eop:
     needs: build-eop
     runs-on: windows-latest
+    if: startsWith(${{ github.event.head_commit.message }}, 'Release')
     steps:
     - name: Release new EOP version on GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
