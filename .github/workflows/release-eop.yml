@@ -9,6 +9,9 @@ name: Release EOP on GitHub
 
 on: [push, pull_request]
 
+env:
+  COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+
 jobs:
   build-eop:
     runs-on: windows-latest
@@ -55,10 +58,8 @@ jobs:
   # If the latest commit message starts with 'Release', issue a release on GitHub
   release-eop:
     needs: build-eop
-    if: startsWith(env.commit_message, 'Release')
+    if: startsWith(${{ env.COMMIT_MESSAGE }}, 'Release')
     runs-on: windows-latest
-    env:
-      commit_message: ${{ github.event.head_commit.message }}
     steps:
     - name: Release new EOP version on GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
