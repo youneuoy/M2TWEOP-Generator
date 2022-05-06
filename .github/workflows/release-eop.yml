@@ -58,7 +58,7 @@ jobs:
   # If the latest commit message starts with 'Release', issue a release on GitHub
   release-eop:
     needs: build-eop
-    if: startsWith(${{ env.COMMIT_MESSAGE }}, 'Release')
+    if: startsWith(${{ github.event.head_commit.message }}, 'Release')
     runs-on: windows-latest
     steps:
     - name: Release new EOP version on GitHub
