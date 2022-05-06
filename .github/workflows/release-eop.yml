@@ -58,12 +58,12 @@ jobs:
     runs-on: windows-latest
     env:
       commit_message: ${{ github.event.head_commit.message }}
+    steps:
     if: startsWith(env.commit_message, 'Release')
-      steps:
-      - name: Release new EOP version on GitHub
-        uses: "marvinpinto/action-automatic-releases@latest"
-        with:
-          repo_token: "${{ secrets.GITHUB_TOKEN }}"
-          automatic_release_tag: "latest"
-          title: "M2TWEOP-Github-generated.zip"
-          files: M2TWEOP.zip
+    - name: Release new EOP version on GitHub
+      uses: "marvinpinto/action-automatic-releases@latest"
+      with:
+        repo_token: "${{ secrets.GITHUB_TOKEN }}"
+        automatic_release_tag: "latest"
+        title: "M2TWEOP-Github-generated.zip"
+        files: M2TWEOP.zip
