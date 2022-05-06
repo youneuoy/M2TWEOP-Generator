@@ -7,7 +7,7 @@
 
 name: Release EOP on GitHub
 
-on: [push, pull_request]
+on: [push]
 
 env:
   COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
@@ -66,5 +66,7 @@ jobs:
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
         repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        title: "M2TWEOP-Github-generated.zip"
+        title: "M2TWEOP-GitHub-Generated-Release"
         files: M2TWEOP.zip
+        prerelease: false
+        automatic_release_tag: "latest"
