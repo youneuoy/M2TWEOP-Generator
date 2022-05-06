@@ -7,6 +7,9 @@
 
 name: Release EOP on GitHub
 
+env:
+  DXSDK_DIR: $HOME/cache/
+
 on:
   push:
     branches:
@@ -32,10 +35,6 @@ jobs:
       with:
         path: ~/cache
         key:  cache
-
-    - name:  Set DXSDK_DIR env variable
-      run:   echo ::set-env name=DXSDK_DIR::$HOME/cache/
-      shell: bash
 
     - name:  Download and cache DirectX SDK
       if:    steps.cache.outputs.cache-hit != 'true'
