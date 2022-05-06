@@ -56,7 +56,7 @@ jobs:
   release-eop:
     runs-on: windows-latest
     steps:
-    # if: "startsWith(github.event.head_commit.message, 'Release')"
+    if: "startsWith(github.event.head_commit.message, 'Release')"
     - name: Release new EOP version on GitHub
       uses: "marvinpinto/action-automatic-releases@latest"
       with:
