@@ -12,6 +12,7 @@ on: [push]
 permissions:
   issues: write
   pull-requests: write
+  contents: write
 
 env:
   COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
