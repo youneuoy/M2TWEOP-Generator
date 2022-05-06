@@ -9,6 +9,10 @@ name: Release EOP on GitHub
 
 on: [push]
 
+permissions:
+  issues: write
+  pull-requests: write
+
 env:
   COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
 
