@@ -18,9 +18,9 @@ jobs:
     steps:
 
     - name: This is a release
-    if: "!startsWith(github.event.head_commit.message, 'SKIP SCRIPTS')"
-    run: echo 'This is a release'
-    shell: bash
+      if: "!startsWith(github.event.head_commit.message, 'SKIP SCRIPTS')"
+      run: echo 'This is a release'
+      shell: bash
 
     - uses: ilammy/msvc-dev-cmd@v1
 
