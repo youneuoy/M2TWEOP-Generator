@@ -1,5 +1,5 @@
 #remove old lua doc files
-Remove-item generatedLuaDocs -recurse
+Remove-item generatedLuaDocs -recurse -ErrorAction Ignore
 
 #create folder for temporary place scripting docs
 new-item ./generatedLuaDocs -itemtype directory
