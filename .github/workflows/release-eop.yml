@@ -17,10 +17,10 @@ jobs:
     runs-on: windows-latest
     steps:
 
-    if: startsWith(${{ github.event.head_commit.message }}, 'Release')
-    - name: This is a release
-    run: echo 'This is a release'
-    shell: bash
+    # if: startsWith(${{ github.event.head_commit.message }}, 'Release')
+    # - name: This is a release
+    # run: echo 'This is a release'
+    # shell: bash
 
     - uses: ilammy/msvc-dev-cmd@v1
 
