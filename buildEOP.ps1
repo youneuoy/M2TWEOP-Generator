@@ -6,6 +6,13 @@ $currentLoc=(get-location).path
 $color = "`e[$(35)m"
 $endColor = "`e[0m`e[30;"
 
+function CopyFilesToFolder ($fromFolder, $toFolder) {
+    $childItems = Get-ChildItem $fromFolder
+    $childItems | ForEach-Object {
+         Copy-Item -Path $_.FullName -Destination $toFolder -Recurse -Force
+    }
+}
+
 Write-Output "$color======== 0) Pre Cleanup ======== $endColor"
 
 
@@ -42,7 +49,7 @@ new-item ./M2TWEOPGenerated  -itemtype directory -erroraction 'continue'
 Copy-Item -Path  "M2TWEOP-DataFiles\*" -Destination "./M2TWEOPGenerated" -recurse
 
 Get-ChildItem -Path "documentationGenerator\EOPDocs\build\html\*" -erroraction 'continue'
-xcopy  /E /Y "documentationGenerator\EOPDocs\build\html\*" "./M2TWEOPGenerated/eopData/helpPages"
+CopyFilesToFolder "documentationGenerator\EOPDocs\build\html" "./M2TWEOPGenerated/eopData/helpPages"
 
 Copy-Item -Path  "M2TWEOP-luaPlugin\Release\luaPlugin.dll" -Destination "./M2TWEOPGenerated/youneuoy_Data/plugins" -erroraction 'continue'
 Copy-Item -Path  "M2TWEOP-library\Release\d3d9.dll" -Destination "./M2TWEOPGenerated" -erroraction 'continue'
