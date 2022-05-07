@@ -4,7 +4,7 @@ $endColor = "`e[0m`e[30;"
 
 #remove old lua doc files
 Write-Output "$color ======== 3.1) Remove old documentation ======== $endColor"
-Remove-item generatedLuaDocs -recurse  -erroraction 'silentlycontinue'
+Remove-item generatedLuaDocs -recurse -erroraction 'continue'
 
 #create folder for temporary place scripting docs
 new-item ./generatedLuaDocs -itemtype directory
@@ -15,9 +15,9 @@ Write-Output "$color ======== 3.2) Generate documentation config ======== $endCo
 
 Write-Output "$color ======== 3.3) Remove old files ======== $endColor"
 #remove old scripting files in main docs path
-Remove-item EOPDocs/source/_static/LuaLib/* -recurse  -erroraction 'silentlycontinue'
+Remove-item EOPDocs/source/_static/LuaLib/* -recurse -erroraction 'continue'
 #erase build path
-Remove-item EOPDocs/build/* -recurse  -erroraction 'silentlycontinue'
+Remove-item EOPDocs/build/* -recurse -erroraction 'continue'
 
 Write-Output "$color ======== 3.4) Build documentation files  ======== $endColor"
 #copy created scripting docs to main docs source folder

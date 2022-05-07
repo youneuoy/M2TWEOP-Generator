@@ -36,8 +36,8 @@ cd "documentationGenerator"
 Write-Output "$color======== 4) Copy all created files ======== $endColor"
 
 Set-Location -Path $currentLoc
-Remove-item ./M2TWEOPGenerated -recurse
-new-item ./M2TWEOPGenerated  -itemtype directory
+Remove-item ./M2TWEOPGenerated -recurse -erroraction 'continue'
+new-item ./M2TWEOPGenerated  -itemtype directory -erroraction 'continue'
 
 Copy-Item -Path  "M2TWEOP-DataFiles\*" -Destination "./M2TWEOPGenerated" -recurse
 Copy-Item -Path  "documentationGenerator\EOPDocs\build\html\*" -Destination "./M2TWEOPGenerated/eopData/helpPages" -recurse 
@@ -50,9 +50,9 @@ Copy-Item -Path  "M2TWEOP-library\Release\M2TWEOPLibrary.dll" -Destination "./M2
 
 # 5) Generate Release ZIP
 Write-Output "$color======== 5) Generate Release ZIP ======== $endColor"
-Remove-item M2TWEOP.zip 
-Compress-Archive -Path "./M2TWEOPGenerated/*"  -DestinationPath "M2TWEOP.zip"
-Remove-item ./M2TWEOPGenerated -recurse 
+Remove-item M2TWEOP.zip -erroraction 'continue'
+Compress-Archive -Path "./M2TWEOPGenerated/*"  -DestinationPath "M2TWEOP.zip" -erroraction 'continue'
+Remove-item ./M2TWEOPGenerated -recurse -erroraction 'continue'
 
 # 6) Done
 Write-Output "$color======== 6) Success! EOP Built Successfully! ======== $endColor"
