@@ -21,7 +21,7 @@ Remove-item EOPDocs/build/* -recurse -erroraction 'continue'
 
 Write-Output "$color ======== 3.4) Build documentation files  ======== $endColor"
 #copy created scripting docs to main docs source folder
-Copy-Item -Path "generatedLuaDocs/*" -Destination "EOPDocs/source/_static/LuaLib" -recurse
+Copy-Item -Path "generatedLuaDocs/*" -Destination "EOPDocs/source/_static/LuaLib" -recurse -erroraction 'continue'
 Start-Process -FilePath ".\EOPDocs\WPy32-3890\scripts\cmdEOPDOCS.bat" -Wait -NoNewWindow
 
 Write-Output "$color ======== 3.5) Success! Documentation built successfully.  ======== $endColor"
