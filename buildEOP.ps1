@@ -42,7 +42,7 @@ new-item ./M2TWEOPGenerated  -itemtype directory -erroraction 'continue'
 Copy-Item -Path  "M2TWEOP-DataFiles\*" -Destination "./M2TWEOPGenerated" -recurse
 
 Get-ChildItem -Path "documentationGenerator\EOPDocs\build\html\*" -erroraction 'continue'
-robocopy "documentationGenerator\EOPDocs\build\html" "./M2TWEOPGenerated/eopData/helpPages" /E -erroraction 'continue'
+xcopy "documentationGenerator\EOPDocs\build\html" "./M2TWEOPGenerated/eopData/helpPages" /l /i /s /y
 
 Copy-Item -Path  "M2TWEOP-luaPlugin\Release\luaPlugin.dll" -Destination "./M2TWEOPGenerated/youneuoy_Data/plugins" -erroraction 'continue'
 Copy-Item -Path  "M2TWEOP-library\Release\d3d9.dll" -Destination "./M2TWEOPGenerated" -erroraction 'continue'
