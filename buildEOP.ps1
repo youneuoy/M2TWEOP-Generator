@@ -50,9 +50,9 @@ Copy-Item -Path  "M2TWEOP-library\Release\M2TWEOPLibrary.dll" -Destination "./M2
 
 # 5) Generate Release ZIP
 Write-Output "$color======== 5) Generate Release ZIP ======== $endColor"
-Remove-item M2TWEOP.zip -erroraction 'silentlycontinue'
+Remove-item M2TWEOP.zip 
 Compress-Archive -Path "./M2TWEOPGenerated/*"  -DestinationPath "M2TWEOP.zip"
-Remove-item ./M2TWEOPGenerated -recurse -erroraction 'silentlycontinue'
+Remove-item ./M2TWEOPGenerated -recurse 
 
 # 6) Done
 Write-Output "$color======== 6) Success! EOP Built Successfully! ======== $endColor"
