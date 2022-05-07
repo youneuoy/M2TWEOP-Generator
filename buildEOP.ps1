@@ -13,18 +13,18 @@ Set-Location -Path $currentLoc
 Remove-item ./logs -recurse -erroraction 'silentlycontinue'
 new-item ./logs -itemtype directory -erroraction 'silentlycontinue'
 
-# 1) Build M2TWEOP-library
-Write-Output "$color======== 1) Build M2TWEOP-library ======== $endColor"
+# # 1) Build M2TWEOP-library
+# Write-Output "$color======== 1) Build M2TWEOP-library ======== $endColor"
 
-devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP library" /out "logs\library.log"
-devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP GUI" /out "logs\GUI.log"
-devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP tools"  /out "logs\tools.log"
-devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "d3d9"  /out "logs\d3d9.log"
+# devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP library" /out "logs\library.log"
+# devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP GUI" /out "logs\GUI.log"
+# devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "M2TWEOP tools"  /out "logs\tools.log"
+# devenv  "M2TWEOP-library\M2TWEOP library.sln" /build "Release|x86" /project "d3d9"  /out "logs\d3d9.log"
 
-# 2) Build M2TWEOP-LuaPlugin
-Write-Output "$color======== 2) Build M2TWEOP-LuaPlugin ======== $endColor"
+# # 2) Build M2TWEOP-LuaPlugin
+# Write-Output "$color======== 2) Build M2TWEOP-LuaPlugin ======== $endColor"
 
-devenv  "M2TWEOP-luaPlugin\luaPlugin.sln" /build "Release|x86" /project "luaPlugin"  /out "logs\luaPlugin.log"
+# devenv  "M2TWEOP-luaPlugin\luaPlugin.sln" /build "Release|x86" /project "luaPlugin"  /out "logs\luaPlugin.log"
 
 # 3) Build Documentation
 Write-Output "$color======== 3) Build M2TWEOP-Documentation ======== $endColor"
@@ -36,11 +36,11 @@ cd "documentationGenerator"
 Write-Output "$color======== 4) Copy all created files ======== $endColor"
 
 Set-Location -Path $currentLoc
-Remove-item ./M2TWEOPGenerated -recurse -erroraction 'silentlycontinue'
-new-item ./M2TWEOPGenerated  -itemtype directory -erroraction 'silentlycontinue'
+Remove-item ./M2TWEOPGenerated -recurse
+new-item ./M2TWEOPGenerated  -itemtype directory
 
 Copy-Item -Path  "M2TWEOP-DataFiles\*" -Destination "./M2TWEOPGenerated" -recurse
-Copy-Item -Path  "documentationGenerator\EOPDocs\build\html\*" -Destination "./M2TWEOPGenerated/eopData/helpPages" -recurse -erroraction 'silentlycontinue'
+Copy-Item -Path  "documentationGenerator\EOPDocs\build\html\*" -Destination "./M2TWEOPGenerated/eopData/helpPages" -recurse 
 
 Copy-Item -Path  "M2TWEOP-luaPlugin\Release\luaPlugin.dll" -Destination "./M2TWEOPGenerated/youneuoy_Data/plugins"
 Copy-Item -Path  "M2TWEOP-library\Release\d3d9.dll" -Destination "./M2TWEOPGenerated"
