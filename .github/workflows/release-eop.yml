@@ -28,6 +28,9 @@ jobs:
       with:
         submodules: recursive
 
+    - name: Update submodules recursively
+      run: git submodule update --init --recursive
+
     - name: Show checked out files
       run: ls -l
       shell: bash
