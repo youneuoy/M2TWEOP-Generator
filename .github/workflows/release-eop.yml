@@ -1,9 +1,8 @@
-# Steps
-# 1. Prepare environment
-#   a. Install DirectXSDK(June 2010)
-#   b. Install Visual Studio 2019 Environment
-# 2. Issue Release on GitHub using generated ZIP
-# 3. Build and Compile docs and place in /docs folder
+# To-Do
+# Run action manually
+# Pass release description
+# Versioning
+
 
 name: Release EOP on GitHub
 
@@ -16,9 +15,12 @@ permissions:
 
 env:
   COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
+  EOP_VERSION: "99"
 
 jobs:
   build-eop:
+    permissions:
+        contents: write
     runs-on: windows-latest
     steps:
     - uses: ilammy/msvc-dev-cmd@v1
@@ -66,10 +68,12 @@ jobs:
       # If the latest commit message starts with 'Release', issue a release on GitHub
       if: "startsWith(github.event.head_commit.message, 'Release')"
     - name: Release new EOP version on GitHub
-      uses: "marvinpinto/action-automatic-releases@latest"
+      uses: ncipollo/release-action@v1
       with:
-        repo_token: "${{ secrets.GITHUB_TOKEN }}"
-        title: "M2TWEOP-GitHub-Generated-Release"
-        files: M2TWEOP.zip
-        prerelease: false
-        automatic_release_tag: "latest"
+        artifacts: "M2TWEOP.zip"
+        bodyFile: "../../docs/releaseInfo/releaseDescription.md"
+        token: ${{ secrets.GITHUB_TOKEN }}
+        name: M2TWEOP-2.1.beta.${{ env.EOP_VERSION }}.zip
+        tag: ${{ env.EOP_VERSION }}
+        commit: "master"
+        allowUpdates: true
