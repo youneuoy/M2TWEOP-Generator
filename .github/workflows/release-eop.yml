@@ -36,7 +36,7 @@ jobs:
       run: ls -l
       shell: bash
 
-    - name: Verify DirectX Cache
+    - name: Verify DirectX cache
       id:   dxsdk-cache
       uses: actions/cache@v1
       with:
@@ -53,6 +53,27 @@ jobs:
 
     - name: Install Visual Studio 2019 Community with Chocolatey
       run: choco install visualstudio2019community
+
+    - name: Verify M2TWEOP-Library cache
+      id:   library-cache
+      uses: actions/cache@v1
+      with:
+       path: M2TWEOP-Library
+       key:  library-cache
+
+    - name: Verify M2TWEOP-luaPlugin cache
+      id:   luaPlugin-cache
+      uses: actions/cache@v1
+      with:
+       path: M2TWEOP-luaPlugin
+       key:  luaPlugin-cache
+
+    - name: Verify documentationGenerator cache
+      id:   documentationGenerator-cache
+      uses: actions/cache@v1
+      with:
+       path: documentationGenerator
+       key:  documentationGenerator-cache
 
     - name: Run buildEOP.ps1
       run: |
