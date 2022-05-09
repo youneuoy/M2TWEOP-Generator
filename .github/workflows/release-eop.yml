@@ -24,6 +24,7 @@ jobs:
     steps:
     - uses: ilammy/msvc-dev-cmd@v1
 
+    # Pull down latest source code and modules
     - name: "Checkout from latest commit: '${{ github.event.head_commit.message }}'"
       uses: actions/checkout@v3
       with:
@@ -36,6 +37,7 @@ jobs:
       run: ls -l
       shell: bash
 
+    # Download and setup dependencies
     - name: Verify DirectX cache
       id:   dxsdk-cache
       uses: actions/cache@v1
@@ -54,6 +56,7 @@ jobs:
     - name: Install Visual Studio 2019 Community with Chocolatey
       run: choco install visualstudio2019community
 
+    # Check cache for previously generated code
     - name: Verify M2TWEOP-Library cache
       id:   library-cache
       uses: actions/cache@v1
@@ -75,6 +78,7 @@ jobs:
        path: documentationGenerator
        key:  documentationGenerator-cache
 
+    # Run build script
     - name: Run buildEOP.ps1
       run: |
         ./buildEOP.ps1
@@ -88,18 +92,23 @@ jobs:
       # If the latest commit message starts with 'Release', issue a release on GitHub
       if: "startsWith(github.event.head_commit.message, 'Release')"
 
+      # Read version number from source code
     - name: Read release version info from source
       run: |
-          echo "EOP_VERSION=$(./getEOPVersionInfo.ps1 "./M2TWEOP-library/M2TWEOP library/m2tweopConstData.h")" >> $GITHUB_ENV
+          echo "EOP_VERSION=$(./getEOPVersionInfo.ps1 "./M2TWEOP-library/M2TWEOP library/m2tweopConstData.h")"  | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf8 -Append
       shell: powershell
 
-    - name: Release new EOP version on GitHub (${{ env.EOP_VERSION }})
+    - name: Output EOP_VERSION
+      run: |
+        echo "${Env:EOP_VERSION}"
+
+    - name: Release new EOP version on GitHub  (${Env:EOP_VERSION})
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ env.EOP_VERSION }}.zip
-        tag: ${{ env.EOP_VERSION }}
+        name: "${Env:EOP_VERSION}.zip"
+        tag: "${Env:EOP_VERSION}"
         artifacts: "M2TWEOP.zip"
         bodyFile: "./docs/releaseInfo/releaseDescription.md"
         token: ${{ secrets.GITHUB_TOKEN }}
-        commit: "master"
+        commit: "test-eop-release"
         allowUpdates: true
