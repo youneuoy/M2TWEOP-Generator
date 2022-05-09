@@ -90,7 +90,7 @@ jobs:
 
     - name: Read release version info from source
       run: |
-          echo "EOP_VERSION=$(./getEOPVersionInfo.ps1 "./M2TWEOP-library/M2TWEOP library/m2tweopConstData.h") >> $GITHUB_ENV"
+          echo "EOP_VERSION=$(./getEOPVersionInfo.ps1 "./M2TWEOP-library/M2TWEOP library/m2tweopConstData.h")" >> $GITHUB_ENV
       shell: powershell
 
     - name: Release new EOP version on GitHub (${{ env.EOP_VERSION }})
