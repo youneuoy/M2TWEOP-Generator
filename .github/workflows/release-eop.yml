@@ -15,7 +15,6 @@ permissions:
 
 env:
   COMMIT_MESSAGE: ${{ github.event.head_commit.message }}
-  EOP_VERSION: "99"
 
 jobs:
   build-eop:
@@ -38,7 +37,7 @@ jobs:
       shell: bash
 
     - name: Verify DirectX Cache
-      id:   dxcache
+      id:   dxsdk-cache
       uses: actions/cache@v1
       with:
        path: DXSDK
@@ -67,13 +66,19 @@ jobs:
 
       # If the latest commit message starts with 'Release', issue a release on GitHub
       if: "startsWith(github.event.head_commit.message, 'Release')"
-    - name: Release new EOP version on GitHub
+
+    - name: Read release version info from source
+      run: |
+          echo "EOP_VERSION=$(./buildEOP.ps1 "./M2TWEOP-library/M2TWEOP library/m2tweopConstData.h") >> $GITHUB_ENV"
+      shell: powershell
+
+    - name: Release new EOP version on GitHub (${{ env.EOP_VERSION }})
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "M2TWEOP.zip"
-        bodyFile: "../../docs/releaseInfo/releaseDescription.md"
-        token: ${{ secrets.GITHUB_TOKEN }}
-        name: M2TWEOP-2.1.beta.${{ env.EOP_VERSION }}.zip
+        name: ${{ env.EOP_VERSION }}.zip
         tag: ${{ env.EOP_VERSION }}
+        artifacts: "M2TWEOP.zip"
+        bodyFile: "./docs/releaseInfo/releaseDescription.md"
+        token: ${{ secrets.GITHUB_TOKEN }}
         commit: "master"
         allowUpdates: true
