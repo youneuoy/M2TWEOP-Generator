@@ -105,6 +105,7 @@ jobs:
     - name: Rename generated zip to match EOP_VERSION
     - run: |
         cp "M2TWEOP.zip" "${{ env.EOP_VERSION }}.zip"
+      shell: bash
 
     - name: Release new EOP version on GitHub - ${{ env.EOP_VERSION }}
       uses: ncipollo/release-action@v1
