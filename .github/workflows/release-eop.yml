@@ -103,7 +103,7 @@ jobs:
         echo "${Env:EOP_VERSION}"
 
     - name: Rename generated zip to match EOP_VERSION
-    - run: |
+      run: |
         cp "M2TWEOP.zip" "${{ env.EOP_VERSION }}.zip"
       shell: bash
 
