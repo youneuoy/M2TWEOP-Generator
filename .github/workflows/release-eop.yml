@@ -102,7 +102,7 @@ jobs:
       run: |
         echo "${Env:EOP_VERSION}"
 
-    - name: "Release new EOP version on GitHub - ${{ Env:EOP_VERSION }}"
+    - name: Release new EOP version on GitHub
       uses: ncipollo/release-action@v1
       with:
         name: ${{ Env:EOP_VERSION }}
