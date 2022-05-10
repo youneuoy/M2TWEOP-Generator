@@ -53,8 +53,8 @@ jobs:
             rm -fR _DX*_ _DX*_.exe
       shell: bash
 
-    - name: Install Visual Studio 2019 Community with Chocolatey
-      run: choco install visualstudio2019community
+    # - name: Install Visual Studio 2019 Community with Chocolatey
+    #   run: choco install visualstudio2019community
 
     # Check cache for previously generated code
     - name: Verify M2TWEOP-Library cache
@@ -78,12 +78,12 @@ jobs:
        path: documentationGenerator
        key:  documentationGenerator-cache
 
-    # Run build script
-    - name: Run buildEOP.ps1
-      run: |
-        ./buildEOP.ps1
-      env:
-        DXSDK_DIR: ${{ github.workspace }}\DXSDK\
+    # # Run build script
+    # - name: Run buildEOP.ps1
+    #   run: |
+    #     ./buildEOP.ps1
+    #   env:
+    #     DXSDK_DIR: ${{ github.workspace }}\DXSDK\
 
     - name: Show generated files
       run: ls -l
@@ -102,11 +102,11 @@ jobs:
       run: |
         echo "${Env:EOP_VERSION}"
 
-    - name: Release new EOP version on GitHub  (${Env:EOP_VERSION})
+    - name: Release new EOP version on GitHub - ${{ Env:EOP_VERSION }}
       uses: ncipollo/release-action@v1
       with:
-        name: "${Env:EOP_VERSION}.zip"
-        tag: "${Env:EOP_VERSION}"
+        name: ${{ Env:EOP_VERSION }}
+        tag: ${{ Env:EOP_VERSION }}
         artifacts: "M2TWEOP.zip"
         bodyFile: "./docs/releaseInfo/releaseDescription.md"
         token: ${{ secrets.GITHUB_TOKEN }}
