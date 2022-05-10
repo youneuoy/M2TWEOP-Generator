@@ -102,11 +102,11 @@ jobs:
       run: |
         echo "${Env:EOP_VERSION}"
 
-    - name: Release new EOP version on GitHub
+    - name: Release new EOP version on GitHub - ${{ env.EOP_VERSION }}
       uses: ncipollo/release-action@v1
       with:
-        name: "${{ Env:EOP_VERSION }}"
-        tag: "${{ Env:EOP_VERSION }}"
+        name: "${{ env.EOP_VERSION }}"
+        tag: "${{ env.EOP_VERSION }}"
         artifacts: "M2TWEOP.zip"
         bodyFile: "./docs/releaseInfo/releaseDescription.md"
         token: ${{ secrets.GITHUB_TOKEN }}
