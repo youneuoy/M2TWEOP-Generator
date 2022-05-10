@@ -105,8 +105,8 @@ jobs:
     - name: Release new EOP version on GitHub
       uses: ncipollo/release-action@v1
       with:
-        name: ${{ Env:EOP_VERSION }}
-        tag: ${{ Env:EOP_VERSION }}
+        name: "${{ Env:EOP_VERSION }}"
+        tag: "${{ Env:EOP_VERSION }}"
         artifacts: "M2TWEOP.zip"
         bodyFile: "./docs/releaseInfo/releaseDescription.md"
         token: ${{ secrets.GITHUB_TOKEN }}
