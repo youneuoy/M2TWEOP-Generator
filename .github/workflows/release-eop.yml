@@ -102,12 +102,16 @@ jobs:
       run: |
         echo "${Env:EOP_VERSION}"
 
+    - name: Rename generated zip to match EOP_VERSION
+    - run: |
+        cp "M2TWEOP.zip" "${{ env.EOP_VERSION }}.zip"
+
     - name: Release new EOP version on GitHub - ${{ env.EOP_VERSION }}
       uses: ncipollo/release-action@v1
       with:
         name: "${{ env.EOP_VERSION }}"
         tag: "${{ env.EOP_VERSION }}"
-        artifacts: "M2TWEOP.zip"
+        artifacts: "${{ env.EOP_VERSION }}.zip"
         bodyFile: "./docs/releaseInfo/releaseDescription.md"
         token: ${{ secrets.GITHUB_TOKEN }}
         commit: "test-eop-release"
