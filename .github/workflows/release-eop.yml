@@ -102,6 +102,18 @@ jobs:
       run: |
         echo "${Env:EOP_VERSION}"
 
+    - name: Online docs - Copy generated documentation to docs folder
+      run: |
+          cp "documentationGenerator/EOPDocs/build/html/*" "docs/eopDocs/helpPages"
+      shell: bash
+  
+    - name: Online docs -  Commit and push updates to docs folder
+      uses: EndBug/add-and-commit@v9
+      with:
+        add: 'docs/eopDocs/helpPages'
+        message: "Updated EOP Docs for version: ${{ env.EOP_VERSION }}"
+        push: true
+
     - name: Rename generated zip to match EOP_VERSION
       run: |
         cp "M2TWEOP.zip" "${{ env.EOP_VERSION }}.zip"
