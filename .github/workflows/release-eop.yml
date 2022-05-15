@@ -104,7 +104,7 @@ jobs:
 
     - name: Online docs - Copy generated documentation to docs folder
       run: |
-          cp -r "documentationGenerator/EOPDocs/build/html/*" "docs/eopDocs/helpPages"
+          cp -r "documentationGenerator/EOPDocs/build/html/." "docs/eopDocs/helpPages"
       shell: bash
   
     - name: Online docs -  Commit and push updates to docs folder
