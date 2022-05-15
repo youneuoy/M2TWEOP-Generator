@@ -86,7 +86,7 @@ jobs:
         DXSDK_DIR: ${{ github.workspace }}\DXSDK\
 
     - name: Show generated files
-      run: ls -l
+      run: ls -l; ls generatedLuaDocs; ls genereatedLuaDocs/build/html
       shell: bash
 
       # If the latest commit message starts with 'Release', issue a release on GitHub
